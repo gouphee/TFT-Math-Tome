@@ -7,4 +7,4 @@ You can now play around with the calculators and the graphing file. Just run "py
 
 Link to Reddit post: https://www.reddit.com/r/CompetitiveTFT/comments/1884ab9/tft_math_tome_of_traits/
 
-Link to Notion wiki: https://www.notion.so/gouphee/c1afda3e3f4f4709a265a040a54e8abe?v=d3b4732179364ae68f8e3b730c746787
+Link to Notion wiki: https://www.notion.so/gouphee/TFT-Tome-Math-9ab55983224c4240876cfc8d079d5ace
