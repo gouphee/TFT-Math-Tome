@@ -1,4 +1,4 @@
-import set10
+import set10constants
 
 from itertools import combinations
 from collections import OrderedDict
@@ -8,10 +8,10 @@ from collections import OrderedDict
 
 
 class Generic_Calculator:
-    def __init__(self, desired=1, dead=0, totalEmblems=24) -> None:
+    def __init__(self, desired=1, dead=0, total_emblems=24) -> None:
         self.desired = desired # number of traits you are okay with
         self.dead = dead # number of dead traits you have
-        self.all = totalEmblems # number of traits with emblems
+        self.all = total_emblems # number of traits with emblems
 
     
     def find_probability(self):

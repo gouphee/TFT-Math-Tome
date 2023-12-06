@@ -1,4 +1,4 @@
-import set10
+import set10constants
 
 from itertools import combinations
 from collections import OrderedDict
@@ -15,7 +15,7 @@ class Set10Calculator:
     def find_probability(self, total, dead):
         prob = 1
         i = 0 # i is both our iterator as well as our counter for how many choices have been made, which changes the odds for the following choice very slightly since we don't have replacement.
-        while i < set10.breakpoints[total]:
+        while i < set10constants.breakpoints[total]:
             prob *= self.find_specific_prob(total - i - dead, len(self.desired)) 
             i += 1
             # (i-1)(okayTraits * i) -> every iteration, we are calculating odds that the number of okay traits weren't chosen. 
@@ -24,7 +24,7 @@ class Set10Calculator:
             # First iteration, we calculate the odds of not hitting to be 5/7. key - i - dead = 8 - 0 - 1 = 7, so this adds up
             # Second iteration, we calculate the odds of not hitting to be 4/6. key - i - dead = 8 - 1 - 1 = 6
         while i < 4:
-            prob *= self.find_specific_prob(len(set10.traits["hasEmblem"]) - i, len(self.desired))
+            prob *= self.find_specific_prob(len(set10constants.traits["has_emblem"]) - i, len(self.desired))
             i += 1
             # Ex: From before, suppose we have 8 traits in and we are looking for 2 traits. We have 2 tailored choices.
             # Third iteration, we have chosen twice, which means there are 21 options. 
@@ -47,17 +47,17 @@ class Set10Calculator:
         contains_desired = all(trait in combo_traits for trait in desired_traits)
 
         # check if combo contains all required units
-        contains_keep = all(unit in combo for unit in self.keep)
+        contains_keep = all(set10constants.champions_by_name[unit] in combo for unit in self.keep)
 
         return trait_count in breakpoints and contains_desired and contains_keep
 
     def find_boards(self): 
         champ_list = []
-        for i in range(1, set10.maxCost[self.level] + 1):
-            champ_list += set10.championsByCost[i]
+        for i in range(1, set10constants.max_cost[self.level] + 1):
+            champ_list += set10constants.champions_by_cost[i]
         
         for unit in self.highroll:
-            if unit not in champ_list:
+            if set10constants.champions_by_name[unit] not in champ_list:
                 champ_list.append(unit)
 
         # Generate all combinations of champions based on the player's level
@@ -66,7 +66,7 @@ class Set10Calculator:
         print(len(possible_combinations))
 
         # Filter combinations based on trait breakpoints and desired traits
-        valid_boards = [combo for combo in possible_combinations if self.evaluate_combo(combo, set10.breakpoints.keys(), self.desired)]
+        valid_boards = [combo for combo in possible_combinations if self.evaluate_combo(combo, set10constants.breakpoints.keys(), self.desired)]
 
         return valid_boards
 
@@ -78,7 +78,7 @@ class Set10Calculator:
         dead = 0
 
         for trait in board_traits:
-            if trait in set10.traits["noEmblem"]:
+            if trait in set10constants.traits["no_emblem"]:
                 dead += 1
         
         return self.find_probability(trait_count, dead)
@@ -124,39 +124,13 @@ class Set10Calculator:
 
 
 def main():
-    early_heart = Set10Calculator(4, ["Heartsteel"], [{
-        "name": "K'Sante",
-        "traits": ["Heartsteel", "Sentinel"],
-    }])
+    early_heart = Set10Calculator(4, ["Heartsteel"], ["K'Sante"])
 
-    early_viego = Set10Calculator(4, ['Pentakill', 'Edgelord'])
-
-    middle_heart = Set10Calculator(6, ["Heartsteel"], [{
-        "name": "K'Sante",
-        "traits": ["Heartsteel", "Sentinel"],
-    }])
-
-    middle_viego = Set10Calculator(6, ['Pentakill', 'Edgelord'], [{
-        "name": "Mordekaiser",
-        "traits": ["Pentakill", "Sentinel"],
-    }], [
-        {
-            "name": "Akali",
-            "traits": ["True Damage", "Executioner", "Breakout"],
-        }, {
-            "name": "Viego",
-            "traits": ["Pentakill", "Edgelord"],
-        }])
-
-    early_ad = Set10Calculator(4, ['Big Shot', 'Executioner', 'Rapidfire'])
+    middle_viego = Set10Calculator(7, ['Pentakill', 'Edgelord'], ["Yone", "Viego", "Riven"], ["AkaliT","AkaliK","Viego"])
 
     early_heart.get_best_comps()
 
-    # middle_viego.get_best_comps()
-
-    # middle_heart.get_best_comps()
-
-    early_viego.get_best_comps()
+    middle_viego.get_best_comps()
 
 
 if __name__ == "__main__":

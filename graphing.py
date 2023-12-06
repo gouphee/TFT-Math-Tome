@@ -9,12 +9,12 @@ import numpy as np
 from generic_calculator import Generic_Calculator
 
 
-def generate_probabilities(maxDesired, maxDead, minTotal, maxTotal):
+def generate_probabilities(max_desired, max_dead, min_total, max_total):
     probabilities = {}
-    for desired in range(1, maxDesired + 1): # desired traits 1-4
+    for desired in range(1, max_desired + 1): # desired traits 1-4
         probabilities[desired] = []
-        for dead in range(0, maxDead + 1): # dead traits 0-3
-            for total in range(minTotal, maxTotal + 1):
+        for dead in range(0, max_dead + 1): # dead traits 0-3
+            for total in range(min_total, max_total + 1):
                 board = Generic_Calculator(desired, dead, total)
                 probs = board.find_probability()
                 probabilities[desired].append((desired, dead, total, probs))
@@ -82,19 +82,19 @@ def plot_difference_subplot(ax, df, dead_traits_count, z_min, z_max, title_suffi
 
     return surf
 
-def prob_difference_graphs(df, totalTraits, firstBreak, secondBreak):
+def prob_difference_graphs(df, total_traits, first_break, second_break):
         # Filter the DataFrame for 23 total traits
-    df_filtered = df[(df['Total Traits'] == totalTraits)]
+    df_filtered = df[(df['Total Traits'] == total_traits)]
 
     # Pivot the DataFrame to get a matrix for the 10 breakpoint
-    df_pivot_1 = df_filtered[df_filtered['Breakpoint'] == firstBreak].pivot(
+    df_pivot_1 = df_filtered[df_filtered['Breakpoint'] == first_break].pivot(
         index='Desired Traits',
         columns='Dead Traits',
         values='Probability'
     )
 
     # Pivot the DataFrame to get a matrix for the 12 breakpoint
-    df_pivot_2 = df_filtered[df_filtered['Breakpoint'] == secondBreak].pivot(
+    df_pivot_2 = df_filtered[df_filtered['Breakpoint'] == second_break].pivot(
         index='Desired Traits',
         columns='Dead Traits',
         values='Probability'
@@ -125,12 +125,12 @@ def prob_difference_graphs(df, totalTraits, firstBreak, secondBreak):
     # Set labels and titles
     ax.set_xlabel('Dead Traits')
     ax.set_ylabel('Desired Traits')
-    ax.set_zlabel(f'Probability Difference (Breakpoint {firstBreak} - Breakpoint {secondBreak})')
-    ax.set_title(f'Smoothed 3D Surface Plot of Probability Difference {firstBreak} - {secondBreak}')
+    ax.set_zlabel(f'Probability Difference (Breakpoint {first_break} - Breakpoint {second_break})')
+    ax.set_title(f'Smoothed 3D Surface Plot of Probability Difference {first_break} - {second_break}')
 
     # Add a color bar which maps values to colors
     cbar = fig.colorbar(surf, shrink=0.5, aspect=5)
-    cbar.set_label(f'Probability Difference (Breakpoint {firstBreak} - Breakpoint {secondBreak})')
+    cbar.set_label(f'Probability Difference (Breakpoint {first_break} - Breakpoint {second_break})')
 
     plt.show()
 
