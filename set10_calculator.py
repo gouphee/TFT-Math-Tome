@@ -58,7 +58,7 @@ class Set10Calculator:
         
         for unit in self.highroll:
             if set10constants.champions_by_name[unit] not in champ_list:
-                champ_list.append(unit)
+                champ_list.append(set10constants.champions_by_name[unit])
 
         # Generate all combinations of champions based on the player's level
         possible_combinations = list(combinations(champ_list, self.level))
@@ -124,13 +124,17 @@ class Set10Calculator:
 
 
 def main():
-    early_heart = Set10Calculator(4, ["Heartsteel"], ["K'Sante"])
+    early_heart = Set10Calculator(4, ["Heartsteel"])
 
-    middle_viego = Set10Calculator(7, ['Pentakill', 'Edgelord'], ["Yone", "Viego", "Riven"], ["AkaliT","AkaliK","Viego"])
+    middle_viego1 = Set10Calculator(7, ['Pentakill', 'Edgelord'], ["Yone", "Viego", "Riven", "Kayle", "Yasuo"], ["Viego"])
+
+    middle_viego2 = Set10Calculator(7, ['Pentakill', 'Edgelord'], ["Yone", "Viego", "Riven", "Kayle", "Yasuo"], ["AkaliK", "AkaliT", "Viego"])
 
     early_heart.get_best_comps()
 
-    middle_viego.get_best_comps()
+    middle_viego1.get_best_comps()
+
+    middle_viego2.get_best_comps()
 
 
 if __name__ == "__main__":

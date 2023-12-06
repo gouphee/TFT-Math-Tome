@@ -16,7 +16,7 @@ class Generic_Calculator:
     
     def find_probability(self):
         probabilities = []
-        for key, value in set10.breakpoints.items():
+        for key, value in set10constants.breakpoints.items():
             prob = 1
             i = 0 # i is both our iterator as well as our counter for how many choices have been made, which changes the odds for the following choice very slightly since we don't have replacement.
             while i < value:
