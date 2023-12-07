@@ -6,7 +6,7 @@ import matplotlib.tri as tri
 import matplotlib.ticker as ticker
 import matplotlib.colors as colors
 import numpy as np
-from generic_calculator import Generic_Calculator
+from generic_calculator import GenericCalculator
 
 
 def generate_probabilities(max_desired, max_dead, min_total, max_total):
@@ -15,7 +15,7 @@ def generate_probabilities(max_desired, max_dead, min_total, max_total):
         probabilities[desired] = []
         for dead in range(0, max_dead + 1): # dead traits 0-3
             for total in range(min_total, max_total + 1):
-                board = Generic_Calculator(desired, dead, total)
+                board = GenericCalculator(desired, dead, total)
                 probs = board.find_probability()
                 probabilities[desired].append((desired, dead, total, probs))
 
