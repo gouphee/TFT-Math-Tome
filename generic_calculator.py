@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 
 
-class Generic_Calculator:
+class GenericCalculator:
     def __init__(self, desired=1, dead=0, total_emblems=24) -> None:
         self.desired = desired # number of traits you are okay with
         self.dead = dead # number of dead traits you have
